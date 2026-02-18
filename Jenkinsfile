@@ -28,6 +28,7 @@ pipeline {
 			steps {
 				git branch: "main", url: "https://github.com/RajanChettri/flask_Practice.git"
 				sh "ls -l"
+				sh "pwd"
 			}
 		}
 		// stage('Create venv'){
