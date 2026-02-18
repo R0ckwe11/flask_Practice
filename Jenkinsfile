@@ -29,6 +29,7 @@ pipeline {
 							touch ~/ssh_test/ssh_works
 							cd ssh_test
 							ls -l
+							EOF
 					'''
 				}
 			}
