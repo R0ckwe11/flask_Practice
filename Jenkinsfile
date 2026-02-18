@@ -1,11 +1,16 @@
 pipeline {
 	agent any
 	stages {
+		// stage('Works?'){
+		// 	steps {
+		// 		sshagent(credentials: ['FlaskEC2']) {
+		// 			sh "ssh ec2-user@ec2-18-156-176-75.eu-central-1.compute.amazonaws.com 'echo "Works!"'"
+		// 		}
+		// 	}
+		// }
 		stage('Works?'){
 			steps {
-				sshagent(credentials: ['FlaskEC2']) {
-					sh "ssh ec2-user@ec2-18-156-176-75.eu-central-1.compute.amazonaws.com 'echo "Works!"'"
-				}
+				sh "echo 'Works!'"
 			}
 		}
 // 		stage('Checkout'){
