@@ -63,20 +63,34 @@ pipeline {
 				// sshCommand(remote: remote, command: "source venv/bin/activate")
 			}
 		}
-		// stage('Install dependencies'){
-		// 	steps {
-		// 		sshCommand(remote: remote, command: "ls -l")
-		// 		sshCommand(remote: remote, command: "ls -l | grep requirements")
-		// 		sshCommand(remote: remote, command: "pip install -r requirements.txt")
-		// 	}
-		// }
-// 		stage('Create .env'){
-// 			steps {
-// 			  	sh "echo 'MONGO_URI=mongodb://127.0.0.1:27017/students' > .env"
-// 			  	sh "echo 'SECRET_KEY=qwerty' >> .env"
-// 			  	sh "cat .env"
-// 			}
-// 		}
+		stage('Install dependencies'){
+			steps {
+				sshagent(credentials: ['FlaskEC2']) {
+					sh '''
+						ssh -o StrictHostKeyChecking=no ec2-user@18.156.176.75 << EOF
+							cd flask_Practice
+							pip install -r requirements.txt
+					'''
+				// sshCommand(remote: remote, command: "ls -l")
+				// sshCommand(remote: remote, command: "ls -l | grep requirements")
+				// sshCommand(remote: remote, command: "pip install -r requirements.txt")
+			}
+		}
+		stage('Create .env'){
+			steps {
+				sshagent(credentials: ['FlaskEC2']) {
+					sh '''
+						ssh -o StrictHostKeyChecking=no ec2-user@18.156.176.75 << EOF
+							cd flask_Practice
+							echo 'MONGO_URI=mongodb://127.0.0.1:27017/students' > .env
+							echo 'SECRET_KEY=qwerty' >> .env
+							cat .env
+					'''
+			  	// sh "echo 'MONGO_URI=mongodb://127.0.0.1:27017/students' > .env"
+			  	// sh "echo 'SECRET_KEY=qwerty' >> .env"
+			  	// sh "cat .env"
+			}
+		}
 // 		stage('Run'){
 // 			steps {
 // 				sh "python app.py"
