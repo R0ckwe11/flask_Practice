@@ -8,7 +8,7 @@
 		}
 		stage('SSH Works?'){
 			steps {
-				sshagent(credentials: ['ec2-user']) {
+				sshagent(credentials: ['FlaskEC2']) {
 					sh 'ssh ec2-user@ec2-18-156-176-75.eu-central-1.compute.amazonaws.com'
 					sh 'touch ~/ssh_works'
 				}
