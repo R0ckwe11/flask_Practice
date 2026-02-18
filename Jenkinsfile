@@ -1,4 +1,4 @@
-2-pipeline {
+pipeline {
 	agent any
 	stages {
 		stage('Works?'){ 
@@ -8,7 +8,7 @@
 		}
 		stage('SSH Works?'){
 			steps {
-				sshagent(credentials: ['FlaskEC2']) {
+				sshagent(credentials: ['ec2-user']) {
 					sh 'ssh ec2-user@ec2-18-156-176-75.eu-central-1.compute.amazonaws.com'
 					sh 'touch ~/ssh_works'
 				}
