@@ -1,6 +1,6 @@
 def remote = [:]
 remote.name = 'Apache'
-remote.host = '18.156.176.75'
+remote.host = 'ec2-18-156-176-75.eu-central-1.compute.amazonaws.com'
 remote.allowAnyHosts = true
 
 pipeline {
