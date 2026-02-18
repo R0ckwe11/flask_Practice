@@ -18,10 +18,10 @@ pipeline {
 			steps {
 				script {
 					remote.user = env.CREDS_USR
-					remote.password = env.CREDS_PSW
+					remote.identityFile = env.CREDS
 				}
 				sh "echo $env.CREDS_USR"
-				sh "echo $env.CREDS_PSW"
+				sh "echo $env.CREDS"
 				sshCommand(remote: remote, command: "touch ~/ssh_works")
 				sshCommand(remote: remote, command: "ls -l ~ | grep ssh_works")
 			}
