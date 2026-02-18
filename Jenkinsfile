@@ -24,7 +24,7 @@ pipeline {
 				// sshCommand(remote: remote, command: "ls -l ~ | grep ssh_works")
 				sshagent(credentials: ['FlaskEC2']) {
 					sh '''
-						ssh -o StrictHostKeyChecking=no env.CREDS_USR@18.156.176.75 << 'EOF'
+						ssh -o StrictHostKeyChecking=no ec2-user@18.156.176.75 << 'EOF'
 							mkdir ssh_test
 							touch ~/ssh_test/ssh_works
 							cd ssh_test
