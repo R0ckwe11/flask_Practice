@@ -40,6 +40,8 @@ pipeline {
 		}
 		stage('Install dependencies'){
 			steps {
+				sshCommand(remote: remote, command: "ls -l")
+				sshCommand(remote: remote, command: "ls -l | grep requirements")
 				sshCommand(remote: remote, command: "pip install -r requirements.txt")
 			}
 		}
