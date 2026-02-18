@@ -1,7 +1,7 @@
-def remote = [:]
-remote.name = 'FlaskEC2'
-remote.host = '18.156.176.75'
-remote.allowAnyHosts = true
+// def remote = [:]
+// remote.name = 'FlaskEC2'
+// remote.host = '18.156.176.75'
+// remote.allowAnyHosts = true
 
 pipeline {
 	agent any
@@ -29,25 +29,36 @@ pipeline {
 							mkdir ssh_test
 							touch ~/ssh_test/ssh_works
 							cd ssh_test
-							ls -l
+							ls -l | grep ssh_works
 					'''
 				}
 			}
 		}
-		// stage('Clone repo'){
-		// 	steps {
-		// 		// git branch: "main", url: "https://github.com/RajanChettri/flask_Practice.git"
-		// 		sshCommand(remote: remote, command: "rm -rf flask_Practice/")
-		// 		sshCommand(remote: remote, command: "git clone https://github.com/R0ckwe11/flask_Practice.git")
-		// 		sshCommand(remote: remote, command: "cd flask_Practice/")
-		// 	}
-		// }
-		// stage('Create and activate venv'){
-		// 	steps {
-		// 	  	sshCommand(remote: remote, command: "python -m venv venv")
-		// 		sshCommand(remote: remote, command: "source venv/bin/activate")
-		// 	}
-		// }
+		stage('Clone repo'){
+			steps {
+				sh '''
+					ssh -o StrictHostKeyChecking=no ec2-user@18.156.176.75 << EOF
+						rm -rf flask_Practice
+						git clone https://github.com/R0ckwe11/flask_Practice.git
+				'''
+				// sshCommand(remote: remote, command: "rm -rf flask_Practice/")
+				// sshCommand(remote: remote, command: "git clone https://github.com/R0ckwe11/flask_Practice.git")
+				// sshCommand(remote: remote, command: "cd flask_Practice/")
+			}
+		}
+		stage('Create and activate venv'){
+			steps {
+				sh '''
+					ssh -o StrictHostKeyChecking=no ec2-user@18.156.176.75 << EOF
+						rm -rf venv
+						python -m venv venv
+						source venv/bin/activate
+				'''
+			 //  	sshCommand(remote: remote, command: "rm -rf venv")
+			 //  	sshCommand(remote: remote, command: "python -m venv venv")
+				// sshCommand(remote: remote, command: "source venv/bin/activate")
+			}
+		}
 		// stage('Install dependencies'){
 		// 	steps {
 		// 		sshCommand(remote: remote, command: "ls -l")
