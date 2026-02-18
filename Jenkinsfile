@@ -23,14 +23,19 @@ pipeline {
 				// sshCommand(remote: remote, command: "touch ~/ssh_works")
 				// sshCommand(remote: remote, command: "ls -l ~ | grep ssh_works")
 				sshagent(credentials: ['FlaskEC2']) {
-					sh '''
-						ssh -o StrictHostKeyChecking=no ec2-user@18.156.176.75 << 'EOF'
-							mkdir ssh_test
-							touch ~/ssh_test/ssh_works
-							cd ssh_test
-							ls -l
-							EOF
-					'''
+					// sh '''
+					// 	ssh -o StrictHostKeyChecking=no ec2-user@18.156.176.75 << 'EOF'
+					// 		mkdir ssh_test
+					// 		touch ~/ssh_test/ssh_works
+					// 		cd ssh_test
+					// 		ls -l
+					// 		EOF
+					// '''
+					sh 'ssh -o StrictHostKeyChecking=no ec2-user@18.156.176.75'
+					sh 'mkdir ssh_test'
+					sh 'touch ~/ssh_test/ssh_works'
+					sh 'cd ssh_test'
+					sh 'ls -l'
 				}
 			}
 		}
