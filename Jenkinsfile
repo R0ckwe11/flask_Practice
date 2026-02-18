@@ -27,7 +27,7 @@ pipeline {
 		stage('Clone repo'){
 			steps {
 				// git branch: "main", url: "https://github.com/RajanChettri/flask_Practice.git"
-				sshCommand(remote: remote, command: "rm -f flask_Practice/")
+				sshCommand(remote: remote, command: "rm -rf flask_Practice/")
 				sshCommand(remote: remote, command: "git clone https://github.com/R0ckwe11/flask_Practice.git")
 				sshCommand(remote: remote, command: "cd flask_Practice")
 			}
