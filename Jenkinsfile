@@ -20,7 +20,7 @@ pipeline {
 					remote.user = env.CREDS_USR
 					remote.password = env.CREDS_PSW
 				}
-				sshCommand(remote: remote, command: "touch ~/ssh_works")
+				sshCommand(remote: remote, command: "sudo touch ~/ssh_works")
 				sshCommand(remote: remote, command: "ls -l ~ | grep ssh_works")
 			}
 		}
