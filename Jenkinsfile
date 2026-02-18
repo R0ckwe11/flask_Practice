@@ -8,7 +8,7 @@ pipeline {
 		// 		}
 		// 	}
 		// }
-		stage('Works?'){
+		stage('Works?'){ 
 			steps {
 				sh "echo 'Works!'"
 			}
