@@ -14,21 +14,21 @@ pipeline {
 		// 		sh "echo 'Works!'"
 		// 	}
 		// }
-		// stage('Check SSH'){
-		// 	steps {
-		// 		script {
-		// 			remote.user = env.CREDS_USR
-		// 			remote.identityFile = env.CREDS
-		// 		}
-		// 		sshCommand(remote: remote, command: "touch ~/ssh_works")
-		// 		sshCommand(remote: remote, command: "ls -l ~ | grep ssh_works")
-		// 	}
-		// }
-		stage('Checkout'){
+		stage('Check SSH'){
 			steps {
-				git branch: "main", url: "https://github.com/RajanChettri/flask_Practice.git"
-				sh "ls -l"
-				sh "pwd"
+				script {
+					remote.user = env.CREDS_USR
+					remote.identityFile = env.CREDS
+				}
+				sshCommand(remote: remote, command: "touch ~/ssh_works")
+				sshCommand(remote: remote, command: "ls -l ~ | grep ssh_works")
+			}
+		}
+		stage('Clone repo'){
+			steps {
+				// git branch: "main", url: "https://github.com/RajanChettri/flask_Practice.git"
+				sshCommand(remote: remote, command: "git clone https://github.com/R0ckwe11/flask_Practice.git")
+				sshCommand(remote: remote, command: "ls -l")
 			}
 		}
 		// stage('Create venv'){
