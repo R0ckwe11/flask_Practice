@@ -14,7 +14,7 @@ pipeline {
 		// 		sh "echo 'Works!'"
 		// 	}
 		// }
-		stage('Check SSH'){
+		stage('Check SSH') {
 			steps {
 				// script {
 				// 	remote.user = env.CREDS_USR
@@ -34,7 +34,7 @@ pipeline {
 				}
 			}
 		}
-		stage('Clone repo'){
+		stage('Clone repo') {
 			steps {
 				sshagent(credentials: ['FlaskEC2']) {
 					sh '''
@@ -48,7 +48,7 @@ pipeline {
 				// sshCommand(remote: remote, command: "cd flask_Practice/")
 			}
 		}
-		stage('Create and activate venv'){
+		stage('Create and activate venv') {
 			steps {
 				sshagent(credentials: ['FlaskEC2']) {
 					sh '''
@@ -63,7 +63,7 @@ pipeline {
 				// sshCommand(remote: remote, command: "source venv/bin/activate")
 			}
 		}
-		stage('Install dependencies'){
+		stage('Install dependencies') {
 			steps {
 				sshagent(credentials: ['FlaskEC2']) {
 					sh '''
@@ -76,7 +76,7 @@ pipeline {
 				// sshCommand(remote: remote, command: "pip install -r requirements.txt")
 			}
 		}
-		stage('Create .env'){
+		stage('Create .env') {
 			steps {
 				sshagent(credentials: ['FlaskEC2']) {
 					sh '''
@@ -89,13 +89,14 @@ pipeline {
 			  	// sh "echo 'MONGO_URI=mongodb://127.0.0.1:27017/students' > .env"
 			  	// sh "echo 'SECRET_KEY=qwerty' >> .env"
 			  	// sh "cat .env"
+				}
 			}
 		}
-// 		stage('Run'){
-// 			steps {
-// 				sh "python app.py"
-// 	        }
-// 		}
+		// stage('Run'){
+		// 	steps {
+		// 		sh "python app.py"
+	 //        }
+		// }
 	}
 	post {
 		always {
