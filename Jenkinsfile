@@ -1,5 +1,13 @@
+def remote = [:]
+remote.name = 'Apache'
+remote.host = 'ec2-18-156-176-75.eu-central-1.compute.amazonaws.com'
+remote.allowAnyHosts = true
+
 pipeline {
 	agent any
+	environment {
+		CREDS = credentials('FlaskEC2')
+	}
 	stages {
 		stage('Works?'){
 			steps {
@@ -8,10 +16,12 @@ pipeline {
 		}
 		stage('SSH Works?'){
 			steps {
-				sshagent(credentials: ['ec2-user']) {
-					sh 'ssh ec2-user@ec2-18-156-176-75.eu-central-1.compute.amazonaws.com'
-					sh 'touch ~/ssh_works'
+				script {
+					remote.user = env.CREDS_USR
+					remote.password = env.CREDS_PSW
 				}
+				sshCommand(remote: remote, command: "touch ~/ssh_works")
+				sshCommand(remote: remote, command: "ls -l ~ | grep ssh_works")
 			}
 		}
 // 		stage('Checkout'){
@@ -36,5 +46,10 @@ pipeline {
 // 				sh "python app.py"
 // 	        }
 // 		}
+	}
+	post {
+		always {
+			sleep 5
+		}
 	}
 }
