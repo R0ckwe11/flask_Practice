@@ -40,7 +40,7 @@ pipeline {
 		}
 		stage('Install dependencies'){
 			steps {
-			  	sh "pip install -r requirements.txt"
+				sshCommand(remote: remote, command: "pip install -r requirements.txt")
 			}
 		}
 // 		stage('Create .env'){
