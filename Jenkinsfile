@@ -1,6 +1,6 @@
 def remote = [:]
 remote.name = 'Apache'
-remote.host = 'ec2-18-156-176-75.eu-central-1.compute.amazonaws.com'
+remote.host = '18.156.176.75'
 remote.allowAnyHosts = true
 
 pipeline {
@@ -20,7 +20,7 @@ pipeline {
 					remote.user = env.CREDS_USR
 					remote.password = env.CREDS_PSW
 				}
-				sshCommand(remote: remote, command: "sudo touch ~/ssh_works")
+				sshCommand(remote: remote, command: "touch ~/ssh_works")
 				sshCommand(remote: remote, command: "ls -l ~ | grep ssh_works")
 			}
 		}
